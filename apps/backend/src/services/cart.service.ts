@@ -50,6 +50,40 @@ class CartService {
       0
     );
   }
+
+  removeItem(userId: string, productId: string): Cart {
+    const cart = this.getCart(userId);
+    cart.items = cart.items.filter((item) => item.productId !== productId);
+    cart.updatedAt = new Date();
+    return cart;
+  }
+
+  clearCart(userId: string): void {
+    this.carts.delete(userId);
+  }
+
+  updateItemQuantity(
+    userId: string,
+    productId: string,
+    quantity: number
+  ): Cart | null {
+    const cart = this.getCart(userId);
+    const item = cart.items.find((item) => item.productId === productId);
+
+    if (!item) return null;
+
+    if (quantity <= 0) {
+      cart.items = cart.items.filter((item) => item.productId !== productId);
+    } else {
+      if (!ProductService.checkStock(productId, quantity)) {
+        return null;
+      }
+      item.quantity = quantity;
+    }
+
+    cart.updatedAt = new Date();
+    return cart;
+  }
 }
 
 export default new CartService();

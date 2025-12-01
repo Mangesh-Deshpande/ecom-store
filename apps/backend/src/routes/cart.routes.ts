@@ -7,4 +7,10 @@ router.get("/", CartController.getCart);
 
 router.post("/items", CartController.addItem);
 
+router.put("/items/:productId", CartController.updateItem);
+
+router.delete("/items/:productId", CartController.removeItem);
+
+router.delete("/", CartController.clearCart);
+
 export default router;

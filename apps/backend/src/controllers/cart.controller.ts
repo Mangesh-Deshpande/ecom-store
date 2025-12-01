@@ -62,4 +62,68 @@ export class CartController {
       },
     });
   };
+
+  // Update item quantity in cart
+  static updateItem = (req: Request, res: Response): void => {
+    const userId = (req.headers["user-id"] as string) || "default-user";
+    const { productId } = req.params;
+    const { quantity } = req.body;
+
+    if (quantity < 0) {
+      res.status(400).json({
+        success: false,
+        message: "Quantity must be non-negative",
+      });
+      return;
+    }
+
+    const cart = CartService.updateItemQuantity(userId, productId, quantity);
+    if (!cart) {
+      res.status(400).json({
+        success: false,
+        message: RESPONSE_MESSAGES.INSUFFICIENT_STOCK,
+      });
+      return;
+    }
+
+    const total = CartService.calculateTotal(cart);
+
+    res.json({
+      success: true,
+      message: RESPONSE_MESSAGES.CART_UPDATED,
+      data: {
+        cart,
+        total,
+      },
+    });
+  };
+
+  // remove item from cart
+  static removeItem = (req: Request, res: Response): void => {
+    const userId = (req.headers["user-id"] as string) || "default-user";
+    const { productId } = req.params;
+
+    const cart = CartService.removeItem(userId, productId);
+    const total = CartService.calculateTotal(cart);
+
+    res.json({
+      success: true,
+      message: RESPONSE_MESSAGES.ITEM_REMOVED,
+      data: {
+        cart,
+        total,
+      },
+    });
+  };
+
+  // clear cart
+  static clearCart = (req: Request, res: Response): void => {
+    const userId = (req.headers["user-id"] as string) || "default-user";
+    CartService.clearCart(userId);
+
+    res.json({
+      success: true,
+      message: RESPONSE_MESSAGES.CART_CLEARED,
+    });
+  };
 }
