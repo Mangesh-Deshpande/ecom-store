@@ -1,0 +1,27 @@
+{
+  "name": "uniblox-io",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@10.9.3",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:frontend": "turbo run dev --filter=frontend",
+    "dev:backend": "turbo run dev --filter=backend",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@vitest/ui": "^4.0.14",
+    "concurrently": "^9.2.1",
+    "jsdom": "^27.2.0",
+    "turbo": "^2.6.1",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.14"
+  }
+}
