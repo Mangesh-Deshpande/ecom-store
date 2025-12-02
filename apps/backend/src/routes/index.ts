@@ -1,12 +1,14 @@
 import { Router } from "express";
-import userRoutes from "./user.routes";
 import cartRoutes from "./cart.routes";
+import checkoutRoutes from "./checkout.routes";
+import adminRoutes from "./admin.routes";
 
 const router = Router();
 
 // API routes
-router.use(userRoutes);
 router.use("/cart", cartRoutes);
+router.use("/checkout", checkoutRoutes);
+router.use("/admin", adminRoutes);
 
 // Health check
 router.get("/health", (req, res) => {

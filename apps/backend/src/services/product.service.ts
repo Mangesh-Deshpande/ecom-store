@@ -6,7 +6,7 @@ const productData = [
     name: "Laptop",
     description: "High quality laptop",
     price: 999.99,
-    stock: 10,
+    stock: 50,
     createdAt: new Date(),
   },
   {
